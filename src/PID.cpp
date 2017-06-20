@@ -16,6 +16,9 @@ void PID::Init(double Kp, double Ki, double Kd) {
 	this->Kp = Kp;
 	this->Ki = Ki;
 	this->Kd = Kd;
+	d_error = 0;
+	p_error = 0;
+	i_error = 0;
 }
 
 void PID::UpdateError(double cte) {
@@ -24,16 +27,7 @@ void PID::UpdateError(double cte) {
 	i_error += cte;	
 }
 
-double PID::TotalError() {
-	double steer = -Kp * p_error - Kd * d_error - Ki * i_error;
-	if (fabs(steer) > 1.0)
-	{
-		steer *= 0.5;
-	}
-	else
-	{
-		steer *= -0.5;
-	}
-	return steer;
+double PID::TotalError() {	
+	return - Kp * p_error - Kd * d_error - Ki * i_error;;
 }
 
